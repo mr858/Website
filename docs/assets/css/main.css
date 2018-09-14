@@ -1545,7 +1545,7 @@ input, select, textarea {
 				height: 4rem;
 				cursor: pointer;
 				text-indent: 4rem;
-				overflow: hidden;
+				overflow: scroll;
 				white-space: nowrap;
 			}
 
