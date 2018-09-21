@@ -58,7 +58,8 @@
 
 	<p><em>Original blink code: (not ours!)</em></p>
 
-	<p>~~~c
+	<p>
+		<code>
 	// the setup function runs once when you press reset or power the board
 	void setup() {
 	  // initialize digital pin LED<em>BUILTIN as an output.
@@ -72,7 +73,8 @@
 	  digitalWrite(LED</em>BUILTIN, LOW);    // turn the LED off by making the voltage LOW
 	  delay(1000);                       // wait for a second
 	}
-	~~~</p>
+</code>
+	</p>
 
 	<p>A video of the uploading process onto the Arduino Uno is shown for reference:</p>
 
@@ -90,7 +92,7 @@
 
 	<p><em>Modifications to blink code:</em></p>
 
-	<p>~~~c
+	<p><code>
 	void setup() {
 	  // initialize digital pin LED_BUILTIN as an output.
 	  pinMode(2, OUTPUT);
@@ -137,7 +139,7 @@
 	  digitalWrite(13, LOW);
 	  delay(500);                       // wait for a second
 	}
-	~~~</p>
+</code></p>
 
 	<p>First we tried it with one LED. Then we tried it with a bunch of LEDs. They all worked!</p>
 
@@ -155,7 +157,7 @@
 
 	<p><em>Analog Read Function:</em></p>
 
-	<p>~~~c
+	<p><code>
 	int analogPin = 0;
 	void setup() {
 	  // put your setup code here, to run once:
@@ -170,7 +172,7 @@
 	  Serial.println (" V");
 	  delay(1000);
 	}
-	~~~</p>
+</code></p>
 
 	<p>By adjusting the resistance of the potentiometer (turning the screw on top), we were able to adjust the voltage read by the analog input pins.</p>
 
@@ -186,7 +188,7 @@
 
 	<p><em>Analog Write Function:</em></p>
 
-	<p>~~~c
+	<p><code>
 	int analogPin = 0;
 	int ledPin = 3;
 	void setup() {
@@ -204,7 +206,7 @@
 	  analogWrite(ledPin, pwm);
 	  delay(250);
 	}
-	~~~</p>
+</code></p>
 
 	<p>We put an LED and resistor in series with our PWM output pin, and by adjusting the potentiometer’s resistance, we were able to change the LED’s brightness.</p>
 
@@ -226,11 +228,8 @@
 
 	<p><em>Implementation of Autonomous Task:</em></p>
 
-	<p>~~~c</p>
-
-	<h1 id="includeservoh">include <Servo.h></h1>
-
-	<p>Servo servoL;
+	<p><code>
+	Servo servoL;
 	Servo servoR;
 	void setup() {
 	// put your setup code here, to run once:
@@ -249,10 +248,11 @@
 	delay(1000);
 	}</p>
 
-	<p>~~~
+	<p></code>
+		
 	<em>Watch our robot make a lil square!!</em></p>
 
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/Fo20T0LzfJ0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>	
+	<iframe width="560" height="315" src="https://www.youtube.com/embed/Fo20T0LzfJ0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
 							</div>
 						</div>
 					</div>
