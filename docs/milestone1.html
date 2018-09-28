@@ -14,9 +14,11 @@
 	<body class="is-preload">
  		<!-- Wrapper -->
 			<div id="wrapper">
-				<form action="./index.html">
-			<input type="submit" value="Home" />
-</form>
+				<center>
+				<table>
+	    			<tr><td><button id="Home" onclick="Redirect(this)">Home</button> <button id="Work" onclick="Redirect(this)">Work</button></td></tr>
+				</table>
+				</center>
  				<!-- Header -->
 					<div id="tt">
 						<div class="content">
@@ -35,7 +37,7 @@
 
 	<li>Getting our robot to successfully traverse a grid in a figure eight </li>
 	</ul>
-			
+
 	<p>Additionally, we focused on: </p>
 
 	<ul>
@@ -58,7 +60,7 @@
 	<p>We equipped our robot with two line sensors in its front, designed to be far enough apart to straddle a line of electrical tape (see image below).</p>
 
  	<img src="./images/FRONTOFROBOT.jpg" alt="Front of Robot" style="width:670px;height:549px">
-			
+
 			<p>Our line following code is written with three cases in mind: </p>
 			<ul>
 				<li>If the robot detects that neither of its sensors are on the line, it will drive straight</li>
@@ -77,13 +79,13 @@
 	else if (sensor_values[1] < 300) { veer_right(); }
 </code>
 </p>
-			<p>Some code from the helper functions <code>drive_straight()</code>, and <code>veer_left()</code> is shown below.</p>			
+			<p>Some code from the helper functions <code>drive_straight()</code>, and <code>veer_left()</code> is shown below.</p>
 			<p><code>drive_straight()</code> sets both wheels to rotate in the forward direction at a moderate speed.</p>
 <p>
 <code>
 void drive_straight(){<br>
 &emsp; servoL.write(95);<br>
-&emsp; servoR.write(85);<br>     
+&emsp; servoR.write(85);<br>
 }
 	</code></p>
 			<p><code>veer_left()</code> increases the speed of the right wheel relative to its speed set by <code>drive_straight()</code>, and rotates the left wheel backward. <code>veer_right()</code> is defined nearly identically to <code>veer_left()</code>.</p>
@@ -94,7 +96,7 @@ void veer_left(){<br>
 &emsp; servoR.write(55);<br>
 }
 </code></p>
-			
+
 <p>Check out our robot following this jagged line:</p>
  <iframe width="560" height="315" src="https://www.youtube.com/embed/HUTCxMMCKz0"></iframe>
 			<h2>Figure Eight</h2>
@@ -111,7 +113,7 @@ void veer_left(){<br>
 				<li>Left</li>
 				<li>Left</li>
 			</ol>
-			
+
 			<p>The switch/case statements in our setup and loop are shown below:</p>
 <p><code>
 //Case: reaches intersection<br>
@@ -183,10 +185,10 @@ void turn_right(){<br>
 			<p>Check out our robot trace a figure 8!!! (including some tough love to demonstrate course correction abilities)</p>
 			 <iframe width="560" height="315" src="https://www.youtube.com/embed/wixIh0njYuw"></iframe>
 
-			
-			
-			
-	
+
+
+
+
 							</div>
 						</div>
 					</div>
@@ -205,5 +207,18 @@ void turn_right(){<br>
 								<script src="assets/js/breakpoints.min.js"></script>
 								<script src="assets/js/util.js"></script>
 								<script src="assets/js/main.js"></script>
+								<script>
+								function Redirect(ele){
+									console.log("Test");
+									if(ele.id == "Home"){
+							        		window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/';
+										console.log("Home");
+									}else if(ele.id == "Work"){
+										window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/work.html';
+										console.log("Work");
+									}
+									console.log(ele.id);
+								}
+								</script>
 					 	</body>
 					</html>

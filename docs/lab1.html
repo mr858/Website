@@ -14,16 +14,15 @@
 	<body class="is-preload">
  		<!-- Wrapper -->
 			<div id="wrapper">
-				<form action="./index.html">
-			<input type="submit" value="Home" />
-</form>
+				<center>
+				<table>
+						<tr><td><button id="Home" onclick="Redirect(this)">Home</button> <button id="Work" onclick="Redirect(this)">Work</button></td></tr>
+				</table>
+				</center>
  				<!-- Header -->
 					<div id="tt">
 						<div class="content">
 							<div class="inner">
-								<form action="./index.html">
-								    <input type="submit" value="Go Home" />
-</form>
                 <h1>Lab 1</h1>
                 <p> Subteam 1: Felicia, Ben, Ian </p>
                 <p>Subteam 2: Michael, Ria</p>
@@ -275,5 +274,19 @@
 								<script src="assets/js/breakpoints.min.js"></script>
 								<script src="assets/js/util.js"></script>
 								<script src="assets/js/main.js"></script>
+								<script>
+								function Redirect(ele){
+									console.log("Test");
+									if(ele.id == "Home"){
+							        		window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/';
+										console.log("Home");
+									}else if(ele.id == "Work"){
+										window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/work.html';
+										console.log("Work");
+									}
+									console.log(ele.id);
+								}
+								</script>
 					 	</body>
+
 					</html>
