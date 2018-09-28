@@ -42,33 +42,14 @@
 	</ul>
 
 
-	<p>After retrieving the necessary components, we connected our Uno to the Arduino IDE and uploaded the Blink example program to it.  The function of this program is to cycle an on-board LED on and off every second.</p>
+	<h2>Materials: </h2>
 
-	<p><em>Original blink code: (not ours!)</em></p>
+	<p>The only materials used for this milestone that weren’t used in lab one were 3 QTR-1A reflectance sensors (
+<a href="https://www.pololu.com/product/958">datasheet here</a>).</p>
 
-	<p>
-		<code>
-	// the setup function runs once when you press reset or power the board<br>
-	void setup() {<br>
-	  // initialize digital pin LED<em>BUILTIN as an output.<br>
-	  pinMode(LED</em>BUILTIN, OUTPUT);<br>
-	}</p><br>
-<br>
-	<p>// the loop function runs over and over again forever<br>
-	void loop() {<br>
-	  digitalWrite(LED<em>BUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)<br>
-	  delay(1000);                       // wait for a second<br>
-	  digitalWrite(LED</em>BUILTIN, LOW);    // turn the LED off by making the voltage LOW<br>
-	  delay(1000);                       // wait for a second<br>
-	}<br>
-</code>
-	</p>
+	<p>These sensors have three pins, VIN, GND, and OUT. Each sensor outputs a voltage at its OUT pin that corresponds with the lightness or darkness of the surface below it. </p>
 
-	<p>A video of the uploading process onto the Arduino Uno is shown for reference:</p>
-
-	<iframe width="560" height="315" src="https://www.youtube.com/embed/e6g0XYT9Gvw" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-	<p></p>
+	<p>In our setup, the OUT pin of each sensor is tied to a separate analog input of the Arduino Uno controlling our robot. As such, each of these analog inputs will read in a value between 0 and 1023 corresponding to the lightness or darkness of the area under it. </p>
 
 	<p>A video showing the on-board blinking mechanism is shown below. This confirmed that both the board and the Arduino IDE were functioning normally.</p>
 
