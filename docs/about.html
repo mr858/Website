@@ -15,10 +15,11 @@
 	<body class="is-preload">
 
  		<!-- Wrapper -->
-			<form action="./index.html">
+			<div id="wrapper">
+			<form action="javascript:Redirect(this)">
 			<input type="submit" value="Home" />
 			</form>
-			<button onclick="linker()">Home</button>
+				
  				<!-- Header -->
 					<div id="tt">
 						<div class="content">
@@ -123,4 +124,11 @@
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
  	</body>
+	<script>
+	function completeAndRedirect(ele){
+		if(ele.value == 'Home'){
+        		location.href='https://mr858.github.io/tEam-TWeNty-sEVen/';
+		}
+	}
+	</script>
 </html>
