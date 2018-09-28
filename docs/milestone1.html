@@ -62,6 +62,17 @@
 				<li>If the robot detects that its left sensor is on the line, it will veer left to correct course</li>
 				<li>If the robot detects that its right sensor is on the line, it will veer right to correct courses</li>
 			</ul>
+			<p>A snippet of this code is shown below (Please note: Our line-following code is written under the assumption that our robot will follow a grid of white tape on a black background. The threshold sensor values (300 in this case) will change under different circumstances.)</p>
+<p>
+<code>
+	//Case: traveling along line --> drive straight<br>
+	if (sensor_values[0] > 300 && sensor_values[1] > 300) { drive_straight();}<br>
+	//Case: drifting off to the right --> correct left<br>
+	else if (sensor_values[0] < 300) { veer_left(); }<br>
+	//Case: drifting off to the left --> correct right<br>
+	else if (sensor_values[1] < 300) { veer_right(); }<br>
+</code>
+</p>
 			
 			
 	
