@@ -134,6 +134,52 @@ if (sensor_values[0] < 300 && sensor_values[1] < 300){<br>
 <br>
     if (turn_num == 8){ turn_num = 0;}   // reset number of turns after figure 8 completed
 	</code></p>
+			<p>In order to complete a 90 degree turn, we use the third line sensor to tell the robot when to stop turning– the idea is that the robot will stop turning once the back sensor sees white again. However, to deal with the fact that for a short time before the robot completely leaves the first white line, the sensor will still see white, a delay is put in by waiting until a change from black to white is detected. Then, the turn is executed until the change from black to white is detected again.</p>
+			<p>This delay is implemented using a countdown variable that executes at the processing speed of the Arduino and is calibrated to the speed of the wheels that we chose. We can later optimize this countdown variable to increase the speed of our robot.</p>
+			<p>The sensor values are also read during each action– turning and line following–to ensure that the robot knows when to stop.</p>
+			<p>We implemented these turns using helper functions, which are shown below:</p>
+<p><code>
+//HELPER FUNCTIONS<br>
+<br>
+void turn_left(){     <br>
+  while (countdown > 0) {<br>
+    servoL.write(87);<br>
+    servoR.write(35);<br>
+    countdown = countdown - 1;<br>
+  }<br>
+    <br>
+   while (sensor_values[2] > 300){<br>
+       servoL.write(87);<br>
+       servoR.write(35);<br>
+       sensor_values[0] = analogRead(A0);<br>
+       sensor_values[1] = analogRead(A1);<br>
+       sensor_values[2] = analogRead(A2);//delay(500);<br>
+       Serial.println("Turning left!"); <br>
+    } <br>
+   countdown = 8000;<br>
+}<br>
+<br>
+void turn_right(){<br>
+  while(countdown > 0){<br>
+         servoL.write(105);<br>
+        servoR.write(93);<br>
+        countdown = countdown -1;<br>
+  }<br>
+  while (sensor_values[2] > 300){<br>
+        servoL.write(105);<br>
+        servoR.write(93);<br>
+        //delay(500); <br>
+            sensor_values[0] = analogRead(A0);<br>
+          sensor_values[1] = analogRead(A1);<br>
+         sensor_values[2] = analogRead(A2);<br>
+        Serial.println("Turning right!");<br>
+        Serial.println(sensor_values[2]);<br>
+    }<br>
+<br>
+  countdown = 8000;<br>
+ }<br>
+}
+	</code></p>
 			
 			
 	
