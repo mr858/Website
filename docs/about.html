@@ -16,9 +16,7 @@
 
  		<!-- Wrapper -->
 			<div id="wrapper">
-			<form action="javascript:Redirect(this)" method="get">
-			<button type="submit" value="Home" id="Home" />
-			</form>
+			<button id="Home" onclick="Redirect(this)">Home</button>
 				
  				<!-- Header -->
 					<div id="tt">
@@ -127,12 +125,11 @@
 	<script>
 	function Redirect(ele){
 		console.log("Test");
-		if(ele.value == "Home"){
+		if(ele.id == "Home"){
         		window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/';
 			console.log("Home");
 		}
 		console.log(ele.id);
-		console.log(ele.value);
 	}
 	</script>
 </html>
