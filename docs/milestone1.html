@@ -67,8 +67,10 @@
 <code>
 	//Case: traveling along line --> drive straight<br>
 	if (sensor_values[0] > 300 && sensor_values[1] > 300) { drive_straight();}<br>
+	<p></p>
 	//Case: drifting off to the right --> correct left<br>
 	else if (sensor_values[0] < 300) { veer_left(); }<br>
+	<p></p>
 	//Case: drifting off to the left --> correct right<br>
 	else if (sensor_values[1] < 300) { veer_right(); }<br>
 </code>
