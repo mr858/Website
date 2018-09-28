@@ -82,8 +82,8 @@
 <p>
 <code>
 void drive_straight(){<br>
-&ensp; servoL.write(95);<br>
-&ensp; servoR.write(85);<br>     
+&emsp; servoL.write(95);<br>
+&emsp; servoR.write(85);<br>     
 }
 	</code></p>
 			<p><code>veer_left()</code> increases the speed of the right wheel relative to its speed set by <code>drive_straight()</code>, and rotates the left wheel backward. <code>veer_right()</code> is defined nearly identically to <code>veer_left()</code>.</p>
@@ -116,22 +116,23 @@ void veer_left(){<br>
 <p><code>
 //Case: reaches intersection<br>
 if (sensor_values[0] < 300 && sensor_values[1] < 300){<br>
-    Serial.println("Intersection!");<br>
-    switch(turn_num){<br>
-      case 0:turn_left(); break;<br>
-      case 1:turn_right(); break;<br>
-      case 2:turn_right(); break;<br>
-      case 3:turn_right(); break;<br>
-      case 4:turn_right(); break;<br>
-      case 5:turn_left(); break;<br>
-      case 6:turn_left(); break;<br>
-      case 7:turn_left(); break;<br>
-      default: stop_drive(); break;<br>
-    }<br>
+&emsp; Serial.println("Intersection!");<br>
+&emsp; switch(turn_num){<br>
+&emsp; &emsp; case 0:turn_left(); break;<br>
+&emsp; &emsp; case 1:turn_right(); break;<br>
+&emsp; &emsp; case 2:turn_right(); break;<br>
+&emsp; &emsp; case 3:turn_right(); break;<br>
+&emsp; &emsp; case 4:turn_right(); break;<br>
+&emsp; &emsp; case 5:turn_left(); break;<br>
+&emsp; &emsp; case 6:turn_left(); break;<br>
+&emsp; &emsp; case 7:turn_left(); break;<br>
+&emsp; &emsp; default: stop_drive(); break;<br>
+&emsp; }<br>
+}<br>
 <br>
-    turn_num += 1;    // increment number of turns<br>
+turn_num += 1;    // increment number of turns<br>
 <br>
-    if (turn_num == 8){ turn_num = 0;}   // reset number of turns after figure 8 completed
+if (turn_num == 8){ turn_num = 0;}   // reset number of turns after figure 8 completed
 	</code></p>
 			<p>In order to complete a 90 degree turn, we use the third line sensor to tell the robot when to stop turning– the idea is that the robot will stop turning once the back sensor sees white again. However, to deal with the fact that for a short time before the robot completely leaves the first white line, the sensor will still see white, a delay is put in by waiting until a change from black to white is detected. Then, the turn is executed until the change from black to white is detected again.</p>
 			<p>This delay is implemented using a countdown variable that executes at the processing speed of the Arduino and is calibrated to the speed of the wheels that we chose. We can later optimize this countdown variable to increase the speed of our robot.</p>
@@ -141,42 +142,42 @@ if (sensor_values[0] < 300 && sensor_values[1] < 300){<br>
 //HELPER FUNCTIONS<br>
 <br>
 void turn_left(){     <br>
-  while (countdown > 0) {<br>
-    servoL.write(87);<br>
-    servoR.write(35);<br>
-    countdown = countdown - 1;<br>
-  }<br>
+&emsp; while (countdown > 0) {<br>
+&emsp; &emsp; servoL.write(87);<br>
+&emsp; &emsp; servoR.write(35);<br>
+&emsp; &emsp; countdown = countdown - 1;<br>
+&emsp; }<br>
     <br>
-   while (sensor_values[2] > 300){<br>
-       servoL.write(87);<br>
-       servoR.write(35);<br>
-       sensor_values[0] = analogRead(A0);<br>
-       sensor_values[1] = analogRead(A1);<br>
-       sensor_values[2] = analogRead(A2);//delay(500);<br>
-       Serial.println("Turning left!"); <br>
-    } <br>
-   countdown = 8000;<br>
+&emsp; while (sensor_values[2] > 300){<br>
+&emsp; &emsp; servoL.write(87);<br>
+&emsp; &emsp; servoR.write(35);<br>
+&emsp; &emsp; sensor_values[0] = analogRead(A0);<br>
+&emsp; &emsp; sensor_values[1] = analogRead(A1);<br>
+&emsp; &emsp; sensor_values[2] = analogRead(A2);//delay(500);<br>
+&emsp; &emsp; Serial.println("Turning left!"); <br>
+&emsp; } <br>
+&emsp; countdown = 8000;<br>
 }<br>
 <br>
 void turn_right(){<br>
-  while(countdown > 0){<br>
-         servoL.write(105);<br>
-        servoR.write(93);<br>
-        countdown = countdown -1;<br>
-  }<br>
-  while (sensor_values[2] > 300){<br>
-        servoL.write(105);<br>
-        servoR.write(93);<br>
-        //delay(500); <br>
-            sensor_values[0] = analogRead(A0);<br>
-          sensor_values[1] = analogRead(A1);<br>
-         sensor_values[2] = analogRead(A2);<br>
-        Serial.println("Turning right!");<br>
-        Serial.println(sensor_values[2]);<br>
-    }<br>
+&emsp; while(countdown > 0){<br>
+&emsp; &emsp; servoL.write(105);<br>
+&emsp; &emsp; servoR.write(93);<br>
+&emsp; &emsp; countdown = countdown -1;<br>
+&emsp; }<br>
+&emsp; while (sensor_values[2] > 300){<br>
+&emsp; &emsp; servoL.write(105);<br>
+&emsp; &emsp; servoR.write(93);<br>
+&emsp; &emsp; //delay(500); <br>
+&emsp; &emsp; sensor_values[0] = analogRead(A0);<br>
+&emsp; &emsp; sensor_values[1] = analogRead(A1);<br>
+&emsp; &emsp; sensor_values[2] = analogRead(A2);<br>
+&emsp; &emsp; Serial.println("Turning right!");<br>
+&emsp; &emsp; Serial.println(sensor_values[2]);<br>
+&emsp; }<br>
 <br>
-  countdown = 8000;<br>
- }<br>
+&emsp; countdown = 8000;<br>
+}<br>
 }
 	</code></p>
 			
