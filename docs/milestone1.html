@@ -113,6 +113,28 @@ void veer_left(){<br>
 				<li>Left</li>
 			</ol>
 			
+			<p>The switch/case statements in our setup and loop are shown below:</p>
+<p><code>
+//Case: reaches intersection<br>
+if (sensor_values[0] < 300 && sensor_values[1] < 300){<br>
+    Serial.println("Intersection!");<br>
+    switch(turn_num){<br>
+      case 0:turn_left(); break;<br>
+      case 1:turn_right(); break;<br>
+      case 2:turn_right(); break;<br>
+      case 3:turn_right(); break;<br>
+      case 4:turn_right(); break;<br>
+      case 5:turn_left(); break;<br>
+      case 6:turn_left(); break;<br>
+      case 7:turn_left(); break;<br>
+      default: stop_drive(); break;<br>
+    }<br>
+<br>
+    turn_num += 1;    // increment number of turns<br>
+<br>
+    if (turn_num == 8){ turn_num = 0;}   // reset number of turns after figure 8 completed
+	</code></p>
+			
 			
 	
 							</div>
