@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<!--
+	Dimension by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+--><html>
+	<head>
+		<title>tEam TWeNty sEVen</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+ 		<!-- Wrapper -->
+			<div id="wrapper">
+				<center>
+				<table>
+						<tr><td><button id="Home" onclick="Redirect(this)">Home</button> <button id="Work" onclick="Redirect(this)">Work</button></td></tr>
+				</table>
+				</center>
+ 				<!-- Header -->
+					<div id="tt">
+						<div class="content">
+							<div class="inner">
+                <h1>Lab 1</h1>
+                <p>Acoustic Subteam: Ben, Michael </p>
+                <p>Optical Subteam: Felicia, Ria, Ian</p>
+                <ul>
+									<p>Materials:  </p>
+
+	<ul>
+	<li>Arduino Uno</li>
+
+	<li>Electret Microphone</li>
+
+	<li>IR Transistor (OP598)</li>
+
+	<li>IR ‘Hat’</li>
+
+	<li>IR Decoy</li>
+
+	<li>Various other components, as needed</li>
+	</ul>
+
+	<p>The purpose of this lab is to implement new hardware that allows our robot to ‘see’ and interact with its surroundings to a greater extent. These hardware additions include a microphone and an IR phototransistor and IR emitter ‘hat,’ which allows our robot to interpret audible and IR signal information and react accordingly. When fully applied, our robot will have two additional functionalities that will assist us during our final project: the ability to start operation upon perceiving an audio signal at 660 Hz, and the ability to detect other robots outfitted with a similar IR emitter hat.</p>
+
+	<h2>Method - Acoustic:</h2>
+
+	<p>We began this portion of the lab by retrieving the necessary materials and proceeding to power our electret microphone as instructed, detailed in the diagram below.</p>
+
+	<p>A video of the uploading process onto the Arduino Uno is shown for reference:</p>
+
+	<p><img src="./media/mic_circuit(1).png" alt="Mic Circuit" /></p>
+
+	<p>This subteam’s goal was to get our robot to identify an audio signal at 660 Hz.  However, upon connecting the output of our circuit to an oscilloscope, we soon discovered that playing loud audio signals into this microphone results in an output that is too low in voltage to be perceived.  As such, we processed the output of this circuit through a simple inverting amplifier (topology shown below), realized using an LM358 op-amp.</p>
+
+	<p><img src="/team27/media/OpAmpTopology.PNG" alt="OpAmp Topology" /></p>
+
+<p>The output of this amplifier is in the proper voltage range to be detected by our Arduino:</p>
+
+<h3>Vout = VR + ((RF/R1)*(V2-V1))</h3>
+
+<p>Next, we focused on detecting the frequency of the signal reproduced by our microphone circuit. In order to do this, we used <a href="http://wiki.openmusiclabs.com/wiki/ArduinoFFT">Open Music Labs’s Arduino FFT library</a> to compute a Fast Fourier Transform (FFT) on this signal. A Fourier Transform is an algorithm that takes a time-dependent signal and breaks it down into its corresponding frequency components.  Using slightly-modified code from <a href="https://cei-lab.github.io/ECE3400-2017-teamAlpha/lab2.html">Team Alpha’s write-up</a> of this lab, we were able to repeatedly compute a 256 point FFT on the microphone circuit’s output by continuously calling analogRead() on one of the Arduino’s analog inputs:</p>
+
+	<p><code>
+		for (int i = 0 ; i < 512 ; i += 2) {<br>
+	    fft_input[i] = analogRead(A0);<br>
+	    fft_input[i+1] = 0;<br>
+		}<br>
+		fft_window();<br>
+		fft_reorder();<br>
+		fft_run();<br>
+		fft_mag_log();<br>
+		sei();<br>
+</code></p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/tw2DTEFJ99Q" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<p>By dumping the output of these FFTs to serial, we were able to confirm that 660 Hz signals fall in the 3rd FFT bin. (see image below:)</p>
+
+<p><img src="/team27/media/lab2/660hz.png" alt="660 Hz FFT Output" /></p>
+
+<p>As such, if our system perceives a signal in this bin above a certain threshold over 10 consecutive computations of the FFT, it will decide that it has recognized a 660 Hz signal. This implementation prevents our robot from perceiving 660 Hz as the result of noise spikes that fall in the third FFT bin.  In practice, our robot will use this tone as a starting signal to begin normal operations, so once 660 Hz has been detected once, we do not need to worry about subsequent detection.</p>
+
+<p><code>
+	//if 660 Hz is detected over 10 cycles, then start<br>
+if (start == 0) { <br>
+  if (fft_log_out[3] > 70){<br>
+    l = l + 1;<br>
+  }<br>
+  else {<br>
+    l = 0;<br>
+  }<br>
+  if (l >= 10) {<br>
+    start = 1;<br>
+}<br>
+</code></p>
+
+<p>In this video, we confirm the operation of our microphone under the noise of a crowd, an attempt to mimic the final competition conditions:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bWo25RgRp0k" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<h2 id="method---optic">Method - Optic:</h2>
+
+<p>Our robot will eventually be used to traverse a maze while other robots attempt to do the same, so our robot needs to be able to detect these other robots in order to prevent collisions.  In order to accomplish this, we used a phototransistor to output an IR-dependent voltage.</p>
+
+<p>We set up our phototransistor circuit as follows.  The phototransistor is a component that limits the current that passes through it depending on the light exposed to it.  In complete darkness, the phototransistor will act as an open circuit, and as more light shines on the component, more current will pass, and the output voltage will increase.</p>
+
+<p><img src="./media/phototransistor_circuit(1).png" alt="Phototransistor Circuit" /></p>
+
+<p>As with the Acoustic portion of the lab, we are attempting to identify a certain frequency amid the background noise that we don’t care about.  In this instance, that frequency is that of the IR hat.</p>
+
+<p>We measured the output of the phototransistor circuit when we turned our IR hat on, at first from a reasonable distance away, then up close. Since a visible peak to peak voltage was only observed when the IR hat was extremely close (about 3cm), we decided to include an amplifier in the circuit.</p>
+
+<p><img src="/team27/media/inverting_amp_unit.png" alt="Inverting Amp" /></p>
+
+<p>An inverting amplifier configuration was used. We first tested our amplifier circuit with a sinusoidal signal and a 2.5V DC offset to prevent clipping.</p>
+
+<p>The working amplifier is shown below:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/db3fsimdbAE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+<p>We then connected the IR dependent voltage signal to the input of the op-amp. The DC offset was removed, and a capacitor was put in series with the voltage signal to eliminate the DC offset of the signal (about 4.6V directly from the IR sensor output) and prevent clipping.</p>
+
+<p><img src="/team27/media/optical_circuit.png" alt="Optical Circuit" /></p>
+
+<p>When we tested again with the IR hat, for a sensor on one white line of the given grid, it could detect the IR hat on the line next to it.
+The next step was to get the Arduino to detect frequencies from our optical circuit output. For this we used the same FFT implementation as the audio subteam. However, the 6 kHz IR signal was too high in frequency to be detected by the FFT computed at the Arduino’s default ADC freqeuncy. We were able to overcome this by changing the ADC’s prescalar value from its default value of 128 to a value of 16, in the manner explained by <a href="http://www.gammon.com.au/adc">this page</a>. This change essentially increased our sampling frequency by a factor of 8, allowing us to perceive the IR signal.</p>
+
+<p>In the same manner as the audio subteam, we determined that the 6 kHz signal falls into the 25th FFT bin (see image below). As such, if our robot perceives a signal above a certain threshold in this bin, it’ll indicate that it has perceived a 6 kHz signal.</p>
+
+<p><img src="/team27/media/lab2/6khz.png" alt="6 kHz FFT Output" /></p>
+
+<h2 id="putting-it-all-together">Putting it all together:</h2>
+
+<p>Our final circuit combining the optical and audio systems is shown below. The green LED will light up when the 660 Hz tone is detected, and the red LED will light up when only the 6.08kHz signal is detected. The optical circuit and audio circuit outputs are each connected to an analog pin on the Arduino.</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/t8LybhyNJdY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen=""></iframe>
+
+							</div>
+						</div>
+					</div>
+
+
+									<!-- Footer -->
+										<footer id="footer">
+											<p class="copyright">&copy; Untitled. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+										</footer>
+					 			</div>
+					 		<!-- BG -->
+								<div id="bg"></div>
+					 		<!-- Scripts -->
+								<script src="assets/js/jquery.min.js"></script>
+								<script src="assets/js/browser.min.js"></script>
+								<script src="assets/js/breakpoints.min.js"></script>
+								<script src="assets/js/util.js"></script>
+								<script src="assets/js/main.js"></script>
+								<script>
+								function Redirect(ele){
+									console.log("Test");
+									if(ele.id == "Home"){
+							        		window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/';
+										console.log("Home");
+									}else if(ele.id == "Work"){
+										window.location.href='https://mr858.github.io/tEam-TWeNty-sEVen/work.html';
+										console.log("Work");
+									}
+									console.log(ele.id);
+								}
+								</script>
+					 	</body>
+
+					</html>
