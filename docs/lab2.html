@@ -49,11 +49,11 @@
 
 	<p>We began this portion of the lab by retrieving the necessary materials and proceeding to power our electret microphone as instructed, detailed in the diagram below.</p>
 
-	<p><img src="./media/mic_circuit(1).png" alt="Mic Circuit" /></p>
+	<p><img src="./media/lab2/mic_circuit(1).png" alt="Mic Circuit" /></p>
 
 	<p>This subteam’s goal was to get our robot to identify an audio signal at 660 Hz.  However, upon connecting the output of our circuit to an oscilloscope, we soon discovered that playing loud audio signals into this microphone results in an output that is too low in voltage to be perceived.  As such, we processed the output of this circuit through a simple inverting amplifier (topology shown below), realized using an LM358 op-amp.</p>
 
-	<p><img src="/team27/media/OpAmpTopology.PNG" alt="OpAmp Topology" /></p>
+	<p><img src="./media/lab2/OpAmpTopology.PNG" alt="OpAmp Topology" /></p>
 
 <p>The output of this amplifier is in the proper voltage range to be detected by our Arduino:</p>
 
@@ -77,7 +77,7 @@
 
 <p>By dumping the output of these FFTs to serial, we were able to confirm that 660 Hz signals fall in the 3rd FFT bin. (see image below:)</p>
 
-<p><img src="/team27/media/lab2/660hz.png" alt="660 Hz FFT Output" /></p>
+<p><img src="./media/lab2/660hz.png" alt="660 Hz FFT Output" /></p>
 
 <p>As such, if our system perceives a signal in this bin above a certain threshold over 10 consecutive computations of the FFT, it will decide that it has recognized a 660 Hz signal. This implementation prevents our robot from perceiving 660 Hz as the result of noise spikes that fall in the third FFT bin.  In practice, our robot will use this tone as a starting signal to begin normal operations, so once 660 Hz has been detected once, we do not need to worry about subsequent detection.</p>
 
@@ -111,7 +111,7 @@ if (start == 0) { <br>
 
 <p>We measured the output of the phototransistor circuit when we turned our IR hat on, at first from a reasonable distance away, then up close. Since a visible peak to peak voltage was only observed when the IR hat was extremely close (about 3cm), we decided to include an amplifier in the circuit.</p>
 
-<p><img src="/team27/media/inverting_amp_unit.png" alt="Inverting Amp" /></p>
+<p><img src="./media/inverting_amp_unit.png" alt="Inverting Amp" /></p>
 
 <p>An inverting amplifier configuration was used. We first tested our amplifier circuit with a sinusoidal signal and a 2.5V DC offset to prevent clipping.</p>
 
@@ -121,14 +121,14 @@ if (start == 0) { <br>
 
 <p>We then connected the IR dependent voltage signal to the input of the op-amp. The DC offset was removed, and a capacitor was put in series with the voltage signal to eliminate the DC offset of the signal (about 4.6V directly from the IR sensor output) and prevent clipping.</p>
 
-<p><img src="/team27/media/optical_circuit.png" alt="Optical Circuit" /></p>
+<p><img src="./media/optical_circuit.png" alt="Optical Circuit" /></p>
 
 <p>When we tested again with the IR hat, for a sensor on one white line of the given grid, it could detect the IR hat on the line next to it.
 The next step was to get the Arduino to detect frequencies from our optical circuit output. For this we used the same FFT implementation as the audio subteam. However, the 6 kHz IR signal was too high in frequency to be detected by the FFT computed at the Arduino’s default ADC freqeuncy. We were able to overcome this by changing the ADC’s prescalar value from its default value of 128 to a value of 16, in the manner explained by <a href="http://www.gammon.com.au/adc">this page</a>. This change essentially increased our sampling frequency by a factor of 8, allowing us to perceive the IR signal.</p>
 
 <p>In the same manner as the audio subteam, we determined that the 6 kHz signal falls into the 25th FFT bin (see image below). As such, if our robot perceives a signal above a certain threshold in this bin, it’ll indicate that it has perceived a 6 kHz signal.</p>
 
-<p><img src="/team27/media/lab2/6khz.png" alt="6 kHz FFT Output" /></p>
+<p><img src="./media/lab2/6khz.png" alt="6 kHz FFT Output" /></p>
 
 <h2 id="putting-it-all-together">Putting it all together:</h2>
 
