@@ -49,11 +49,11 @@
 
 	<p>We began this portion of the lab by retrieving the necessary materials and proceeding to power our electret microphone as instructed, detailed in the diagram below.</p>
 
-	<p><img src="./images/lab2/mic_circuit(1).png" alt="Mic Circuit" style="width:670px;height:549px"></p>
+	<p><img src="./images/mic_circuit(1).png" alt="Mic Circuit" style="width:670px;height:549px"></p>
 
 	<p>This subteam’s goal was to get our robot to identify an audio signal at 660 Hz.  However, upon connecting the output of our circuit to an oscilloscope, we soon discovered that playing loud audio signals into this microphone results in an output that is too low in voltage to be perceived.  As such, we processed the output of this circuit through a simple inverting amplifier (topology shown below), realized using an LM358 op-amp.</p>
 
-	<p><img src="./images/lab2/OpAmpTopology.PNG" alt="OpAmp Topology" style="width:670px;height:549px"></p>
+	<p><img src="./images/OpAmpTopology.PNG" alt="OpAmp Topology" style="width:670px;height:549px"></p>
 
 <p>The output of this amplifier is in the proper voltage range to be detected by our Arduino:</p>
 
@@ -77,7 +77,7 @@
 
 <p>By dumping the output of these FFTs to serial, we were able to confirm that 660 Hz signals fall in the 3rd FFT bin. (see image below:)</p>
 
-<p><img src="./images/lab2/660hz.png" alt="660 Hz FFT Output" style="width:670px;height:549px"></p>
+<p><img src="./images/660hz.png" alt="660 Hz FFT Output" style="width:670px;height:549px"></p>
 
 <p>As such, if our system perceives a signal in this bin above a certain threshold over 10 consecutive computations of the FFT, it will decide that it has recognized a 660 Hz signal. This implementation prevents our robot from perceiving 660 Hz as the result of noise spikes that fall in the third FFT bin.  In practice, our robot will use this tone as a starting signal to begin normal operations, so once 660 Hz has been detected once, we do not need to worry about subsequent detection.</p>
 
@@ -128,7 +128,7 @@ The next step was to get the Arduino to detect frequencies from our optical circ
 
 <p>In the same manner as the audio subteam, we determined that the 6 kHz signal falls into the 25th FFT bin (see image below). As such, if our robot perceives a signal above a certain threshold in this bin, it’ll indicate that it has perceived a 6 kHz signal.</p>
 
-<p><img src="./images/lab2/6khz.png" alt="6 kHz FFT Output" style="width:670px;height:549px"></p>
+<p><img src="./images/6khz.png" alt="6 kHz FFT Output" style="width:670px;height:549px"></p>
 
 <h2 id="putting-it-all-together">Putting it all together:</h2>
 
