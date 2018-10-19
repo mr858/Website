@@ -69,9 +69,9 @@
 	void setup() {<br>
 	  // initialize digital pin LEDBUILTIN as an output.<br>
 	  pinMode(LEDBUILTIN, OUTPUT);<br>
-	}</p><br>
+	}<br>
 <br>
-	<p>// the loop function runs over and over again forever<br>
+	// the loop function runs over and over again forever<br>
 	void loop() {<br>
 	  digitalWrite(LEDBUILTIN, HIGH);   // turn the LED on (HIGH is the voltage level)<br>
 	  delay(1000);                       // wait for a second<br>
@@ -112,9 +112,8 @@
 	  pinMode(11, OUTPUT);<br>
 	  pinMode(12, OUTPUT);<br>
 	  pinMode(13, OUTPUT);<br>
-	}</p><br>
-<br>
-	<p>// the loop function runs over and over again forever<br>
+	}<br>
+<br>// the loop function runs over and over again forever<br>
 	void loop() {<br>
 	  digitalWrite(2, HIGH);   // turn the LED on (HIGH is the voltage level)<br>
 	  digitalWrite(3, HIGH);<br>
@@ -156,7 +155,7 @@
 
 	<p><em>Potentiometer Wiring Setup:</em></p>
 
-	<p><img src="/media/PotentiometerSetup.png" alt="Potentiometer Setup" />  </p>
+	<p><img src="./images/PotentiometerSetup.png" alt="Potentiometer Setup" />  </p>
 
 	<p>We initialized the serial monitor output to read the value of the analog pin every second:</p>
 
@@ -167,9 +166,9 @@
 	void setup() {<br>
 	  // put your setup code here, to run once:<br>
 	  Serial.begin(9600);<br>
-	}</p><br><br>
+	}<br><br>
 
-	<p>void loop() {<br>
+	void loop() {<br>
 	  // put your main code here, to run repeatedly:<br>
 	  int val = analogRead(analogPin);<br>
 	  float inV = val*.0049;<br>
@@ -199,9 +198,9 @@
 	void setup() {<br>
 	  // put your setup code here, to run once:<br>
 	  Serial.begin(9600);<br>
-	}</p><br>
+	}<br>
 
-	<p>void loop() {<br>
+	void loop() {<br>
 	  // put your main code here, to run repeatedly:<br>
 	  int val = analogRead(analogPin);<br>
 	  float convert = (float(val)/1023) * 255;<br>
@@ -223,7 +222,7 @@
 
 	<p><em>Servo Wiring Setup:</em></p>
 
-	<p><img src="/media/servo_wiring.png" alt="Servo Wiring" /></p>
+	<p><img src="./images/servo_wiring.png" alt="Servo Wiring" /></p>
 
 	<p><em>Servo Motor Controls Using Potentiometer:</em></p>
 
@@ -241,8 +240,8 @@
 	Serial.begin(9600);<br>
 	servoL.attach(3);<br>
 	servoR.attach(9);<br>
-	}</p><br>
-	<p>void loop() {<br>
+	}<br>
+	void loop() {<br>
 	// put your main code here, to run repeatedly:<br>
 	servoL.write(180);<br>
 	servoR.write(0);<br>
